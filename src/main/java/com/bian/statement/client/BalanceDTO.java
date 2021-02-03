@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class BalanceDTO {
     private String id;
-    private String globalId;
     private String accountNumber;
     private Date lastUpdateTs;
     private BigDecimal balance;
@@ -16,14 +15,6 @@ public class BalanceDTO {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getGlobalId() {
-        return globalId;
-    }
-
-    public void setGlobalId(String globalId) {
-        this.globalId = globalId;
     }
 
     public String getAccountNumber() {

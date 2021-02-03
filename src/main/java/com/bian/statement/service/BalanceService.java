@@ -3,7 +3,6 @@ package com.bian.statement.service;
 import com.bian.statement.client.BalanceDTO;
 import com.bian.statement.client.CollectionResource;
 import com.bian.statement.entity.Balance;
-import com.bian.statement.entity.Transaction;
 import com.bian.statement.mapper.BalanceMapper;
 import com.bian.statement.repository.BalanceRepository;
 import com.bian.statement.util.ServiceSortUtil;
@@ -27,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BalanceStatementService {
+public class BalanceService {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -54,7 +53,7 @@ public class BalanceStatementService {
         parameters.put("accountNumber", accountNumber);
 
         Specification<Balance> specification = buildSpecification(parameters);
-        Page<Transaction> page = repository.findAll(specification, pageable);
+        Page<Balance> page = repository.findAll(specification, pageable);
         int totalBalances = (int) page.getTotalElements();
 
         List<BalanceDTO> balanceDTOList = new LinkedList<>();

@@ -3,9 +3,7 @@ package com.bian.statement.controller;
 import com.bian.statement.exception.InvalidSortValueException;
 import org.springframework.data.domain.Sort;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BaseResource {
@@ -13,7 +11,7 @@ public class BaseResource {
     static final String DEFAULT_OFFSET = "0";
     static final String DEFAULT_LIMIT = "50";
 
-    static Map<String, Sort.Direction> parseSortParam(String sortParams) {
+    public static Map<String, Sort.Direction> parseSortParam(String sortParams) {
         if (sortParams == null) {
             return null;
         }
