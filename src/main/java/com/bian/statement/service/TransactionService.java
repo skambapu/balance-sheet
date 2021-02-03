@@ -2,6 +2,7 @@ package com.bian.statement.service;
 
 import com.bian.statement.client.CollectionResource;
 import com.bian.statement.client.TransactionDTO;
+import com.bian.statement.constants.TransactionType;
 import com.bian.statement.entity.Transaction;
 import com.bian.statement.mapper.TransactionMapper;
 import com.bian.statement.repository.TransactionRepository;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -37,15 +37,13 @@ public class TransactionService {
 
     public CollectionResource<TransactionDTO> findTransactions(Map<String, Object> parameters) {
 
-        Pageable pageable = PageRequest.of(0, 50, Sort.DEFAULT_DIRECTION);
+        Pageable pageable = PageRequest.of(0, 50);
 
         Specification<Transaction> specification = buildSpecification(parameters);
         List<TransactionDTO> transactionList = new LinkedList<>();
 
-        @SuppressWarnings("unchecked")
         Page<Transaction> page = repository.findAll(specification, pageable);
         int totalStatus = (int) page.getTotalElements();
-
 
         page.iterator().forEachRemaining(transaction -> {
             TransactionDTO transactionDTO = mapper.map(transaction, TransactionDTO.class);
@@ -77,9 +75,15 @@ public class TransactionService {
                 List<Predicate> predicates = new LinkedList<>();
 
                 if (constraints.get("accountNumber") != null) {
-                    String vin = (String) constraints.get("accountNumber");
-                    predicates.add(builder.equal(transactionRoot.get("accountNumber"), vin));
+                    String accountNumber = (String) constraints.get("accountNumber");
+                    predicates.add(builder.equal(transactionRoot.get("accountNumber"), accountNumber));
                 }
+
+                if (constraints.get("type") != null) {
+                    TransactionType type = (TransactionType) constraints.get("type");
+                    predicates.add(builder.equal(transactionRoot.get("type"), type));
+                }
+
                 if (constraints.get("startDate") != null && constraints.get("endDate") != null) {
                     predicates.add(builder.between(transactionRoot.<Date>get("transactionTs"), (Date)constraints.get("startDate"), (Date)constraints.get("endDate")));
                 }

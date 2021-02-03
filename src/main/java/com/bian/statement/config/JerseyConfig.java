@@ -1,4 +1,3 @@
-/*
 package com.bian.statement.config;
 
 import com.bian.statement.controller.BalanceStatementController;
@@ -16,4 +15,3 @@ public class JerseyConfig extends ResourceConfig {
 		register(TransactionStatementController.class);
 	}
 }
-*/

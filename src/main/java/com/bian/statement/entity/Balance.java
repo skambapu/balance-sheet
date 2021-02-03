@@ -14,7 +14,7 @@ public class Balance {
     private Long id;
     private String globalId;
     private String accountNumber;
-    private String lastUpdateTs;
+    private Date lastUpdateTs;
     private BigDecimal balance;
 
     @PrePersist
@@ -30,11 +30,11 @@ public class Balance {
         this.accountNumber = accountNumber;
     }
 
-    public String getLastUpdateTs() {
+    public Date getLastUpdateTs() {
         return lastUpdateTs;
     }
 
-    public void setLastUpdateTs(String lastUpdateTs) {
+    public void setLastUpdateTs(Date lastUpdateTs) {
         this.lastUpdateTs = lastUpdateTs;
     }
 

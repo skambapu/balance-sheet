@@ -88,8 +88,8 @@ public class BalanceStatementService {
                 List<Predicate> predicates = new LinkedList<>();
 
                 if (constraints.get("accountNumber") != null) {
-                    String vin = (String) constraints.get("accountNumber");
-                    predicates.add(builder.equal(balanceRoot.get("accountNumber"), vin));
+                    String accountNumber = (String) constraints.get("accountNumber");
+                    predicates.add(builder.equal(balanceRoot.get("accountNumber"), accountNumber));
                 }
                 return builder.and(predicates.toArray(new Predicate[predicates.size()]));
             }

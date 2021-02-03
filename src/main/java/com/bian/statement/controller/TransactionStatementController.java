@@ -21,8 +21,8 @@ public class TransactionStatementController extends BaseResource{
     @Autowired
     TransactionService transactionService;
 
-    @GetMapping
-    public Response findBalances(@QueryParam("accountNumber") String acctNumber, @QueryParam("startDate") Date startDate, @QueryParam("endDate")Date endDate, @QueryParam("transactionType") TransactionType type) {
+    @GetMapping("/findTransactions")
+    public Response findTransactions(@QueryParam("accountNumber") String acctNumber, @QueryParam("startDate") Date startDate, @QueryParam("endDate")Date endDate, @QueryParam("transactionType") TransactionType type) {
         Map<String, Object> params = new HashMap<>();
         params.put("accountNumber", acctNumber);
         params.put("startDate", startDate);
@@ -32,7 +32,7 @@ public class TransactionStatementController extends BaseResource{
         return Response.ok(transactionDTOCollectionResource).build();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/deleteAllTxn")
     public Response deleteAllTransactions() {
         boolean isDeleted = transactionService.deleteAllTransactions();
         if(isDeleted) {

@@ -18,14 +18,14 @@ public class BalanceStatementController extends BaseResource{
     @Autowired
     BalanceStatementService balanceStatementService;
 
-    @GetMapping
+    @GetMapping("/findBalances")
     public Response findBalances(@QueryParam("accountNumber") String acctNumber, @QueryParam("sort") @DefaultValue("lastUpdateTs:DESC") String sort) {
         CollectionResource<BalanceDTO> balancesCollection = balanceStatementService.findBalances(acctNumber, parseSortParam(sort));
         return Response.ok(balancesCollection).build();
     }
 
 
-    @DeleteMapping
+    @DeleteMapping("/deleteAllBalances")
     public Response deleteBalances() {
         boolean isDeleted = balanceStatementService.deleteAllBalances();
         if(isDeleted) {
