@@ -27,6 +27,11 @@ public class BalanceStatementController extends BaseResource{
 
     @DeleteMapping
     public Response deleteBalances() {
-        return Response.noContent().build();
+        boolean isDeleted = balanceStatementService.deleteAllBalances();
+        if(isDeleted) {
+            return Response.noContent().build();
+        } else {
+            return Response.serverError().build();
+        }
     }
 }

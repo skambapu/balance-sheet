@@ -5,6 +5,7 @@ import com.bian.statement.client.TransactionDTO;
 import com.bian.statement.constants.TransactionType;
 import com.bian.statement.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController("/transactions")
-public class TransactionStatementController {
+public class TransactionStatementController extends BaseResource{
+
     @Autowired
     TransactionService transactionService;
 
@@ -28,5 +30,15 @@ public class TransactionStatementController {
         params.put("type", type);
         CollectionResource<TransactionDTO> transactionDTOCollectionResource = transactionService.findTransactions(params);
         return Response.ok(transactionDTOCollectionResource).build();
+    }
+
+    @DeleteMapping
+    public Response deleteAllTransactions() {
+        boolean isDeleted = transactionService.deleteAllTransactions();
+        if(isDeleted) {
+            return Response.noContent().build();
+        } else {
+            return Response.serverError().build();
+        }
     }
 }

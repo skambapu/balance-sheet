@@ -7,6 +7,8 @@ import com.bian.statement.entity.Transaction;
 import com.bian.statement.mapper.BalanceMapper;
 import com.bian.statement.repository.BalanceRepository;
 import com.bian.statement.util.ServiceSortUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,10 +21,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class BalanceStatementService {
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     BalanceRepository repository;
 
@@ -54,7 +62,21 @@ public class BalanceStatementService {
             balanceDTOList.add(balanceMapper.map(balance, BalanceDTO.class));
         });
 
+        logger.info("Fetched " +  totalBalances + " Balances Successfully.");
+
         return new CollectionResource<>(balanceDTOList, balanceDTOList.size(), totalBalances);
+    }
+
+    public BalanceDTO createBalance(BalanceDTO balanceDTO) {
+        Balance savedBalance = repository.save(balanceMapper.map(balanceDTO, Balance.class));
+        logger.info("Saved Balance Successfully." +  savedBalance.getId());
+        return balanceMapper.map(savedBalance, BalanceDTO.class);
+    }
+
+    public boolean deleteAllBalances() {
+        repository.deleteAll();
+        logger.info("Deleted All Balances Successfully.");
+        return true;
     }
 
     private Specification<Balance> buildSpecification(final Map<String, Object> constraints) {

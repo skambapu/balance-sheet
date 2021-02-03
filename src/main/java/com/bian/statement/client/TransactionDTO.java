@@ -9,7 +9,7 @@ public class TransactionDTO {
 
     private String id;
     private String accountNumber;
-    private Date transactionTs;
+    private String transactionTs;
     private BigDecimal amount;
     private TransactionType type;
 
@@ -29,11 +29,11 @@ public class TransactionDTO {
         this.accountNumber = accountNumber;
     }
 
-    public Date getTransactionTs() {
+    public String getTransactionTs() {
         return transactionTs;
     }
 
-    public void setTransactionTs(Date transactionTs) {
+    public void setTransactionTs(String transactionTs) {
         this.transactionTs = transactionTs;
     }
 

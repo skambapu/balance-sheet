@@ -5,6 +5,8 @@ import com.bian.statement.client.TransactionDTO;
 import com.bian.statement.entity.Transaction;
 import com.bian.statement.mapper.TransactionMapper;
 import com.bian.statement.repository.TransactionRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +26,8 @@ import java.util.Map;
 
 @Service
 public class TransactionService {
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     TransactionRepository repository;
@@ -48,7 +52,20 @@ public class TransactionService {
             transactionList.add(transactionDTO);
         });
 
+        logger.info("Fetched " +  totalStatus + " Transactions Successfully.");
         return new CollectionResource<>(transactionList, transactionList.size(), totalStatus);
+    }
+
+    public TransactionDTO createTransaction(TransactionDTO transactionDTO) {
+        Transaction savedTransaction = repository.save(mapper.map(transactionDTO, Transaction.class));
+        logger.info("Saved Transaction Successfully." + savedTransaction.getId());
+        return mapper.map(savedTransaction, TransactionDTO.class);
+    }
+
+    public boolean deleteAllTransactions() {
+        repository.deleteAll();
+        logger.info("Deleted All Transactions Successfully.");
+        return true;
     }
 
     private Specification<Transaction> buildSpecification(final Map<String, Object> constraints) {

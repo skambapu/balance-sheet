@@ -15,7 +15,7 @@ public class Transaction {
     private Long id;
     private String globalId;
     private String accountNumber;
-    private Date transactionTs;
+    private String transactionTs;
     private BigDecimal amount;
     private TransactionType type;
 
@@ -32,11 +32,11 @@ public class Transaction {
         this.accountNumber = accountNumber;
     }
 
-    public Date getTransactionTs() {
+    public String getTransactionTs() {
         return transactionTs;
     }
 
-    public void setTransactionTs(Date transactionTs) {
+    public void setTransactionTs(String transactionTs) {
         this.transactionTs = transactionTs;
     }
 

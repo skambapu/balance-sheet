@@ -7,7 +7,7 @@ public class BalanceDTO {
     private String id;
     private String globalId;
     private String accountNumber;
-    private Date lastUpdateTs;
+    private String lastUpdateTs;
     private BigDecimal balance;
 
     public String getId() {
@@ -34,11 +34,11 @@ public class BalanceDTO {
         this.accountNumber = accountNumber;
     }
 
-    public Date getLastUpdateTs() {
+    public String getLastUpdateTs() {
         return lastUpdateTs;
     }
 
-    public void setLastUpdateTs(Date lastUpdateTs) {
+    public void setLastUpdateTs(String lastUpdateTs) {
         this.lastUpdateTs = lastUpdateTs;
     }
 
